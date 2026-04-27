@@ -4,9 +4,9 @@
 #include <string.h>
 #include <time.h>
 
-#define TIME_FMT "%H:%M:%S\0" // you can change it to what suits you
+#define TIME_FMT "%H:%M:%S" // you can change it to what suits you
 #define TIME_FMT_SIZE                                                          \
-  4 + 1 + 2 + 1 + 2 + 1 // if TIME_FMT changes, this should also change or else
+  4 + 1 + 2 + 1 + 2 // if TIME_FMT changes, this should also change or else
 // u might get a buffer overflow
 typedef enum { DEBUG, LOG, ERROR, WARN, INFO, SUCCESS } LOG_LEVEL;
 
