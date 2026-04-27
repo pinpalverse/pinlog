@@ -1,0 +1,1 @@
+A basic logging library that just works, simple but effective
