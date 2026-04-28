@@ -1,3 +1,6 @@
+#ifndef __PIN_LOG
+#define __PIN_LOG
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,3 +64,6 @@ void _vinternal_pinlog_to_file(LOG_LEVEL lvl, FILE *out_file, int line,
 {\
     _vinternal_pinlog_to_file(lvl, stdout, __LINE__, __FILE_NAME__, __func__,\
                              fmt, ##__VA_ARGS__);}
+
+
+#endif
