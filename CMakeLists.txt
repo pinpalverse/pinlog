@@ -48,11 +48,13 @@ set(PINLOG_LIBRARIES pinlog)
 set(PINLOG_INCLUDE_DIRS ${CMAKE_INSTALL_FULL_INCLUDEDIR})
 
 # Create imported target
-add_library(pinlog::pinlog INTERFACE IMPORTED)
+add_library(pinlog::pinlog SHARAED IMPORTED)
 set_target_properties(pinlog::pinlog PROPERTIES
     INTERFACE_INCLUDE_DIRECTORIES \"${CMAKE_INSTALL_FULL_INCLUDEDIR}\"
-    INTERFACE_LINK_LIBRARIES \"${CMAKE_INSTALL_FULL_LIBDIR}/libpinlog.so\"
-)
+    INTERFACE_LOCATION \"${CMAKE_INSTALL_FULL_LIBDIR}/libpinlog${CMAKE_SHARED_LIBRARY_SUFFIX}\"
+
+add_library(pinlog ALIAS pinlog::pinlog)
+
 ")
 
 file(WRITE ${CMAKE_BINARY_DIR}/pinlogConfig.cmake "${CONFIG_FILE_CONTENT}")
