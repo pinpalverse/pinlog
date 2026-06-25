@@ -1,4 +1,4 @@
-#include "../include/pinlog.h"
+#include "../include/pinlog/pinlog.h"
 
 
 void _vinternal_pinlog_to_file(LOG_LEVEL lvl, FILE *out_file, int line,

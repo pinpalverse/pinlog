@@ -1,4 +1,4 @@
-#include "pinlog.h"
+#include <pinlog/pinlog.h>
 
 int main(){
     char* f = "Brian";

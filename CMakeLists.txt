@@ -3,10 +3,15 @@ project(pinlog VERSION 1.0 DESCRIPTION "The logging library for pinpal" LANGUAGE
 include(GNUInstallDirs)
 
 add_library(pinlog SHARED src/pinlog.c)
+add_library(pinlog_static STATIC src/pinlog.c)
 set_target_properties(pinlog PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR}
-    PUBLIC_HEADER include/pinlog.h)
+    PUBLIC_HEADER include/pinlog/pinlog.h)
+
+set_target_properties(pinlog_static PROPERTIES
+    OUTPUT_NAME pinlog 
+    CLEAN_DIRECT_OUTPUT 1)
 
 target_include_directories(pinlog 
     PRIVATE .
@@ -14,7 +19,24 @@ target_include_directories(pinlog
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
+
+target_include_directories(pinlog_static
+    PRIVATE .
+    INTERFACE
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+
 configure_file(pinlog.pc.in pinlog.pc @ONLY)
+
+
+add_executable(example example.c)
+target_link_libraries(example pinlog)
+target_include_directories(example PRIVATE include)
+
+set_target_properties(example PROPERTIES
+    INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}"
+    INSTALL_RPATH_USE_LINK_PATH TRUE)
+
 
 # Create simple config file for find_package
 set(CONFIG_FILE_CONTENT "
@@ -50,9 +72,9 @@ endif()
 file(WRITE ${CMAKE_BINARY_DIR}/pinlogConfigVersion.cmake "${VERSION_FILE_CONTENT}")
 
 # Install everything
-install(TARGETS pinlog
+install(TARGETS pinlog pinlog_static
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/pinlog)
 
 install(FILES 
     ${CMAKE_BINARY_DIR}/pinlog.pc
