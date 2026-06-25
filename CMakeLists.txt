@@ -11,9 +11,9 @@ set_target_properties(pinlog PROPERTIES
 configure_file(pinlog.pc.in pinlog.pc @ONLY)
 target_include_directories(pinlog PRIVATE .)
 
-add_executable(pinlog_example examples/example.c)
-target_link_libraries(pinlog_example pinlog)
-target_include_directories(pinlog_example PRIVATE include)
+add_executable(example example.c)
+target_link_libraries(example pinlog)
+target_include_directories(example PRIVATE include)
 
 install(TARGETS pinlog
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
